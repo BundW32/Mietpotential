@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { UserInput, AnalysisResult, GroundingSource } from "../types";
+import { UserInput, AnalysisResult, GroundingSource } from "./types";
 
 export const analyzePotential = async (input: UserInput): Promise<AnalysisResult> => {
   // Always create a new GoogleGenAI instance right before making an API call to ensure it always uses the most up-to-date API key
