@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-// FIX: All imports point to the current folder './' because your files are in the root
+// FIX: Imports use single dot './'
 import InputForm from './InputForm';
 import AnalysisResults from './AnalysisResults';
 import { UserInput, AnalysisResult } from './types';
@@ -7,7 +7,6 @@ import { analyzePotential } from './geminiService';
 import { AlertCircle, Scale, RefreshCcw, Key } from 'lucide-react';
 
 const App: React.FC = () => {
-  // --- STATE ---
   const [userInput, setUserInput] = useState<UserInput | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +19,7 @@ const App: React.FC = () => {
   const resultsRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<HTMLDivElement>(null);
 
-  // --- WORDPRESS INTEGRATION ---
+  // WordPress Integration
   useEffect(() => {
     const sendHeight = () => {
       if (appRef.current) {
@@ -38,7 +37,7 @@ const App: React.FC = () => {
     };
   }, [result, userInput, error, isLoading, progress]);
 
-  // --- LOADING SIMULATION ---
+  // Loading Simulation
   const simulateProgress = () => {
     setProgress(0);
     const timer = setInterval(() => {
@@ -86,12 +85,8 @@ const App: React.FC = () => {
       stopTimer();
       console.error("App Error:", err);
       let msg = "Die Analyse konnte nicht abgeschlossen werden.";
-      
-      // ERROR HANDLING (Replaces the window.aistudio check)
-      if (err.message?.includes("API key") || err.message?.includes("403")) {
-         msg = "API Key fehlt oder ist ungültig. Bitte prüfen Sie die Vercel-Einstellungen.";
-      } else if (err.message?.includes("500")) {
-        msg = "Der Server ist überlastet. Bitte versuchen Sie es gleich noch einmal.";
+      if (err.message?.includes("API key")) {
+         msg = "API Key fehlt. Bitte prüfen Sie die Vercel-Einstellungen.";
       } else if (err.message) {
         msg = err.message;
       }
@@ -119,11 +114,6 @@ const App: React.FC = () => {
               <h1 className="text-2xl font-black text-white leading-none uppercase tracking-tight">B & W</h1>
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Immobilien Management</p>
             </div>
-          </div>
-          <div className="hidden sm:block">
-            <span className="inline-block px-3 py-1 bg-slate-900 rounded-full text-[10px] font-bold text-[#f5931f] uppercase tracking-wider border border-slate-800 shadow-sm">
-              KI Miet-Potential
-            </span>
           </div>
         </div>
 
@@ -195,4 +185,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default App; // <--- THIS LINE IS CRUCIAL
