@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// FIX: Added curly brackets { } because we switched to Named Export
+// FIX: Using curly braces { } because we are using a Named Export
 import { App } from './App';
-import './index.css'; 
+import './index.css';
 
 const rootElement = document.getElementById('root');
 
