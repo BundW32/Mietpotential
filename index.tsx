@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// FIX: Curly braces { } import the Named Export from App.tsx
-import App from './App';
+import App from './App'; // No curly braces!
 import './index.css';
 
 const rootElement = document.getElementById('root');
