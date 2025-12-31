@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { PropertyType, Condition, UserInput } from '../types';
+import { PropertyType, Condition, UserInput } from './types';
 import { MapPin, Ruler, Building, Coins, Sparkles, Loader2, ChevronRight, Home } from 'lucide-react';
 
 interface Props {
