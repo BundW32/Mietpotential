@@ -5,7 +5,7 @@ import { UserInput, AnalysisResult } from './types';
 import { analyzePotential } from './geminiService';
 import { AlertCircle, Scale, RefreshCcw, Key } from 'lucide-react';
 
-// FIX: Added "export" here directly. This is a Named Export.
+// FIX: "export const" makes this a Named Export (Safest method)
 export const App: React.FC = () => {
   const [userInput, setUserInput] = useState<UserInput | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
