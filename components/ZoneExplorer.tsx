@@ -1,75 +1,75 @@
-
 import React, { useState } from 'react';
-import { LocationZone } from '../types';
-import { Map as MapIcon, Info, Navigation, ExternalLink, MapPin } from 'lucide-react';
+import { MapPin, Info } from 'lucide-react';
+
+interface Zone {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  examples: string[];
+}
 
 interface ZoneExplorerProps {
-  zones: LocationZone[];
-  mapLink?: string;
+  zones: Zone[];
   cityName: string;
 }
 
-const ZoneExplorer: React.FC<ZoneExplorerProps> = ({ zones, mapLink, cityName }) => {
-  const [selectedZone, setSelectedZone] = useState<string | null>(zones[1]?.id || null);
-
-  const activeZone = zones.find(z => z.id === selectedZone);
+const ZoneExplorer: React.FC<ZoneExplorerProps> = ({ zones, cityName }) => {
+  const [activeZone, setActiveZone] = useState<string | null>(zones[0]?.id || null);
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
-      <div className="px-5 py-3 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50/50">
-        <div>
-          <h3 className="text-xs font-bold text-slate-800 flex items-center gap-2 uppercase">
-            <MapIcon className="text-[#f5931f]" size={14} />
-            Mietspiegel-Zonen: {cityName}
-          </h3>
-        </div>
+    <div className="bg-slate-900/50 rounded-2xl border border-slate-800 overflow-hidden">
+      <div className="p-4 border-b border-slate-800 flex items-center gap-2">
+        <MapPin className="text-[#f5931f]" size={16} />
+        <h3 className="text-xs font-bold text-white uppercase tracking-widest">
+          Lage-Analyse: {cityName}
+        </h3>
       </div>
-
-      <div className="p-4">
-        {/* Compact Tabs */}
-        <div className="grid grid-cols-3 gap-2 mb-4">
+      
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        {/* Sidebar List */}
+        <div className="border-b md:border-b-0 md:border-r border-slate-800 p-2 space-y-1">
           {zones.map((zone) => (
             <button
               key={zone.id}
-              onClick={() => setSelectedZone(zone.id)}
-              className={`p-2 rounded-lg border transition-all text-center ${
-                selectedZone === zone.id 
-                  ? 'border-[#f5931f] bg-[#f5931f]/5 ring-2 ring-[#f5931f]/10' 
-                  : 'border-slate-100 bg-slate-50 hover:border-slate-200'
+              onClick={() => setActiveZone(zone.id)}
+              className={`w-full text-left px-4 py-3 rounded-lg text-xs font-bold transition-all flex items-center justify-between group ${
+                activeZone === zone.id 
+                  ? 'bg-[#f5931f] text-white shadow-lg' 
+                  : 'text-slate-400 hover:bg-slate-800 hover:text-white'
               }`}
             >
-              <div className="flex items-center justify-center gap-1.5 mb-1">
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: zone.color || '#cbd5e1' }}></div>
-                <span className="text-[8px] font-black uppercase text-slate-400">Klasse</span>
-              </div>
-              <h4 className="font-bold text-slate-800 text-[10px] truncate">{zone.name}</h4>
+              {zone.name}
+              {activeZone === zone.id && <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />}
             </button>
           ))}
         </div>
 
-        {/* Detailed Zone Content - Slimmer */}
-        {activeZone && (
-          <div className="bg-slate-50 rounded-lg p-4 border border-slate-100 animate-in fade-in duration-300">
-            <div className="space-y-3">
-              <div className="flex items-start gap-2">
-                <Info size={14} className="text-slate-400 shrink-0 mt-0.5" />
-                <p className="text-[11px] text-slate-600 leading-normal">
-                  {activeZone.description}
-                </p>
-              </div>
-
-              {activeZone.examples && activeZone.examples.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-200">
-                  {activeZone.examples.map((ex, i) => (
-                    <span key={i} className="text-[9px] bg-white text-slate-500 px-2 py-0.5 rounded border border-slate-200">
-                      {ex}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        {/* Content Area */}
+        <div className="col-span-2 p-6 bg-slate-950/30">
+          {zones.map((zone) => {
+             if (zone.id !== activeZone) return null;
+             return (
+               <div key={zone.id} className="animate-in fade-in slide-in-from-left-2 duration-300">
+                 <h4 className="text-lg font-black text-white mb-2">{zone.name}</h4>
+                 <p className="text-sm text-slate-400 leading-relaxed mb-6">{zone.description}</p>
+                 
+                 <div>
+                   <p className="text-[10px] font-bold text-[#f5931f] uppercase tracking-widest mb-2 flex items-center gap-1">
+                     <Info size={12} /> Typische Merkmale
+                   </p>
+                   <div className="flex flex-wrap gap-2">
+                     {zone.examples.map((ex, i) => (
+                       <span key={i} className="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full text-[10px] text-slate-300">
+                         {ex}
+                       </span>
+                     ))}
+                   </div>
+                 </div>
+               </div>
+             );
+          })}
+        </div>
       </div>
     </div>
   );
