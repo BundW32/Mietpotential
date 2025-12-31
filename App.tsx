@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-// FIX: Imports use single dot './'
 import InputForm from './InputForm';
 import AnalysisResults from './AnalysisResults';
 import { UserInput, AnalysisResult } from './types';
 import { analyzePotential } from './geminiService';
 import { AlertCircle, Scale, RefreshCcw, Key } from 'lucide-react';
 
-const App: React.FC = () => {
+// FIX: Added "export" here directly. This is a Named Export.
+export const App: React.FC = () => {
   const [userInput, setUserInput] = useState<UserInput | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +68,6 @@ const App: React.FC = () => {
 
     try {
       const analysis = await analyzePotential(data);
-      
       stopTimer();
       setProgress(100);
       setLoadingText("Analyse erfolgreich abgeschlossen!");
@@ -98,8 +97,6 @@ const App: React.FC = () => {
   return (
     <div ref={appRef} className="w-full bg-slate-950 text-slate-100 font-sans selection:bg-[#f5931f]/30 overflow-hidden min-h-[600px]">
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
-        
-        {/* Header */}
         <div className="flex items-center justify-between gap-4 border-b border-slate-800 pb-6">
           <div className="flex items-center gap-4">
             <div className="h-10 w-10">
@@ -117,7 +114,6 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* LOADING SCREEN */}
         {isLoading ? (
           <div className="bg-slate-900/50 rounded-2xl border border-slate-800 p-12 flex flex-col items-center justify-center min-h-[400px] animate-in fade-in zoom-in-95 duration-500">
             <div className="relative mb-8">
@@ -141,7 +137,6 @@ const App: React.FC = () => {
           </section>
         )}
         
-        {/* Error Display */}
         {error && (
           <div className="bg-red-950/30 border border-red-900/50 p-4 rounded-xl flex items-start gap-3 animate-in fade-in shadow-lg">
             {error.includes("API Key") ? <Key className="text-red-500" size={18} /> : <AlertCircle className="text-red-500" size={18} />}
@@ -158,7 +153,6 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Results */}
         <div ref={resultsRef} className="scroll-mt-8">
           {result && userInput && !isLoading && (
             <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -167,7 +161,6 @@ const App: React.FC = () => {
           )}
         </div>
 
-        {/* Disclaimer */}
         <div className="mt-12 pt-8 border-t border-slate-800 space-y-4 opacity-60 hover:opacity-100 transition-opacity">
           <div className="flex items-start gap-3 text-slate-500">
             <Scale size={16} className="shrink-0 mt-0.5" />
@@ -179,10 +172,7 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
 };
-
-export default App; // <--- THIS LINE IS CRUCIAL
