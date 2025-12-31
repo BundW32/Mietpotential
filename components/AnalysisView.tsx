@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AnalysisResult, UserInput } from '../types';
+import { AnalysisResult, UserInput } from './types';
 import { TrendingUp, Info, ExternalLink, ShieldCheck, Target, Euro, BarChart3, Plus, Minus } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell, CartesianGrid } from 'recharts';
 
