@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// FIX: Using curly braces { } because we are using a Named Export
+// FIX: Curly braces { } import the Named Export from App.tsx
 import { App } from './App';
 import './index.css';
 
