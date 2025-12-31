@@ -1,4 +1,3 @@
-
 export enum PropertyType {
   APARTMENT = 'Wohnung',
   HOUSE = 'Haus',
@@ -6,9 +5,8 @@ export enum PropertyType {
 }
 
 export enum Condition {
-  NEW = 'Neubau / Erstbezug',
+  NEW = 'Neubau',
   MINT = 'Neuwertig',
-  MODERNIZED = 'Modernisiert',
   WELL_KEPT = 'Gepflegt',
   NEEDS_RENOVATION = 'Renovierungsbedürftig'
 }
@@ -21,48 +19,38 @@ export interface UserInput {
   yearBuilt: number;
   condition: Condition;
   currentColdRent: number;
-  hasTripleGlazing: boolean;
-  hasBalcony: boolean;
-  hasFloorHeating: boolean;
-  isBarrierFree: boolean;
-  hasModernBathroom: boolean;
-  sanitaryModernizationYear?: number;
-  heatingModernizationYear?: number;
-  wallInsulationYear?: number;
-  isQuietLocation: boolean;
-  // Optionale Zusatzmerkmale
-  hasGreenSpaceNearby?: boolean;
-  hasGoodInfrastructure?: boolean;
+  hasTripleGlazing?: boolean;
+  hasBalcony?: boolean;
+  hasFloorHeating?: boolean;
+  isBarrierFree?: boolean;
+  hasModernBathroom?: boolean;
 }
 
-export interface FeatureImpact {
-  feature: string;
-  impactPercent: number;
-  direction: 'positive' | 'negative' | 'neutral';
-  description: string;
-}
-
-export interface LocationZone {
-  id: string;
-  name: string;
-  description: string;
-  impactPercent: string;
-  color?: string;
-  examples?: string[];
+export interface GroundingSource {
+  uri: string;
+  title: string;
 }
 
 export interface AnalysisResult {
   estimatedMarketRentPerSqm: number;
   estimatedTotalMarketRent: number;
-  mietspiegelMin: number;
-  mietspiegelMax: number;
   locationAnalysis: string;
+  confidenceScore: number;
   potentialYearlyGain: number;
   rentGapPercentage: number;
-  comparableRentHigh: number;
-  comparableRentLow: number;
-  sourceType: 'QUALIFIED_MIETSPIEGEL' | 'SIMPLE_MIETSPIEGEL' | 'MARKET_ESTIMATION';
-  confidenceScore: number;
-  featureImpacts: FeatureImpact[];
-  locationZones?: LocationZone[];
+  featureImpacts: Array<{
+    feature: string;
+    impactPercent: number;
+    direction: 'positive' | 'negative';
+    description: string;
+  }>;
+  locationZones?: Array<{
+    id: string;
+    name: string;
+    description: string;
+    color: string;
+    examples: string[];
+  }>;
+  sources?: GroundingSource[];
+  sourceType?: string;
 }
