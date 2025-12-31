@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AnalysisResult, UserInput } from '../types';
+import { AnalysisResult, UserInput } from './types';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell } from 'recharts';
 import { TrendingUp, ArrowRight, BarChart3, PlusCircle, MinusCircle } from 'lucide-react';
 import ZoneExplorer from './ZoneExplorer';
